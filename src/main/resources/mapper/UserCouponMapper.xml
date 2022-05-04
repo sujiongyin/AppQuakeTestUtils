@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.UserCouponDao">
+
+    <resultMap type="com.ooooo.quake.model.UserCoupon" id="TUserCouponMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="sourceId" column="source_id" jdbcType="VARCHAR"/>
+        <result property="sourceType" column="source_type" jdbcType="INTEGER"/>
+        <result property="couponId" column="coupon_id" jdbcType="VARCHAR"/>
+        <result property="couponType" column="coupon_type" jdbcType="INTEGER"/>
+        <result property="couponName" column="coupon_name" jdbcType="VARCHAR"/>
+        <result property="couponPrice" column="coupon_price" jdbcType="NUMERIC"/>
+        <result property="couponThresholdPrice" column="coupon_threshold_price" jdbcType="NUMERIC"/>
+        <result property="currencyCode" column="currency_code" jdbcType="VARCHAR"/>
+        <result property="shopId" column="shop_id" jdbcType="VARCHAR"/>
+        <result property="shopName" column="shop_name" jdbcType="VARCHAR"/>
+        <result property="productIdList" column="product_id_list" jdbcType="VARCHAR"/>
+        <result property="validityStartTime" column="validity_start_time" jdbcType="TIMESTAMP"/>
+        <result property="validityEndTime" column="validity_end_time" jdbcType="TIMESTAMP"/>
+        <result property="isUsed" column="is_used" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="productId" column="product_id" jdbcType="VARCHAR"/>
+        <result property="productName" column="product_name" jdbcType="VARCHAR"/>
+        <result property="productCoverUrl" column="product_cover_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TUserCouponMap">
+        select id,
+               user_id,
+               source_id,
+               source_type,
+               coupon_id,
+               coupon_type,
+               coupon_name,
+               coupon_price,
+               coupon_threshold_price,
+               currency_code,
+               shop_id,
+               shop_name,
+               product_id_list,
+               validity_start_time,
+               validity_end_time,
+               is_used,
+               is_delete,
+               create_time,
+               update_time,
+               product_id,
+               product_name,
+               product_cover_url
+        from db_ooooo.t_user_coupon
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TUserCouponMap">
+        select id,
+               user_id,
+               source_id,
+               source_type,
+               coupon_id,
+               coupon_type,
+               coupon_name,
+               coupon_price,
+               coupon_threshold_price,
+               currency_code,
+               shop_id,
+               shop_name,
+               product_id_list,
+               validity_start_time,
+               validity_end_time,
+               is_used,
+               is_delete,
+               create_time,
+               update_time,
+               product_id,
+               product_name,
+               product_cover_url
+        from db_ooooo.t_user_coupon limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TUserCouponMap">
+        select
+        id, user_id, source_id, source_type, coupon_id, coupon_type, coupon_name, coupon_price, coupon_threshold_price,
+        currency_code, shop_id, shop_name, product_id_list, validity_start_time, validity_end_time, is_used, is_delete,
+        create_time, update_time, product_id, product_name, product_cover_url
+        from db_ooooo.t_user_coupon
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="sourceId != null and sourceId != ''">
+                and source_id = #{sourceId}
+            </if>
+            <if test="sourceType != null">
+                and source_type = #{sourceType}
+            </if>
+            <if test="couponId != null and couponId != ''">
+                and coupon_id = #{couponId}
+            </if>
+            <if test="couponType != null">
+                and coupon_type = #{couponType}
+            </if>
+            <if test="couponName != null and couponName != ''">
+                and coupon_name = #{couponName}
+            </if>
+            <if test="couponPrice != null">
+                and coupon_price = #{couponPrice}
+            </if>
+            <if test="couponThresholdPrice != null">
+                and coupon_threshold_price = #{couponThresholdPrice}
+            </if>
+            <if test="currencyCode != null and currencyCode != ''">
+                and currency_code = #{currencyCode}
+            </if>
+            <if test="shopId != null and shopId != ''">
+                and shop_id = #{shopId}
+            </if>
+            <if test="shopName != null and shopName != ''">
+                and shop_name = #{shopName}
+            </if>
+            <if test="productIdList != null and productIdList != ''">
+                and product_id_list = #{productIdList}
+            </if>
+            <if test="validityStartTime != null">
+                and validity_start_time = #{validityStartTime}
+            </if>
+            <if test="validityEndTime != null">
+                and validity_end_time = #{validityEndTime}
+            </if>
+            <if test="isUsed != null">
+                and is_used = #{isUsed}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="productId != null and productId != ''">
+                and product_id = #{productId}
+            </if>
+            <if test="productName != null and productName != ''">
+                and product_name = #{productName}
+            </if>
+            <if test="productCoverUrl != null and productCoverUrl != ''">
+                and product_cover_url = #{productCoverUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--  通过优惠券ID查询用户Id数据  -->
+    <select id="queryCouponIdToCouponUserId" resultType="com.ooooo.quake.model.UserCoupon">
+        select id,
+        user_id,
+        source_id,
+        source_type,
+        coupon_id,
+        coupon_type,
+        coupon_name,
+        coupon_price,
+        coupon_threshold_price,
+        currency_code,
+        shop_id,
+        shop_name,
+        product_id_list,
+        validity_start_time,
+        validity_end_time,
+        is_used,
+        is_delete,
+        create_time,
+        update_time,
+        product_id,
+        product_name,
+        product_cover_url
+        from db_ooooo.t_user_coupon
+        <if test="couponId != null and couponId != ''">
+            where coupon_id = #{couponId}
+        </if>
+        <if test="userId != null and userId != ''">
+            and user_id = #{userId}
+        </if>
+        and is_delete = FALSE;
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_user_coupon(user_id, source_id, source_type, coupon_id, coupon_type, coupon_name,
+                                           coupon_price, coupon_threshold_price, currency_code, shop_id, shop_name,
+                                           product_id_list, validity_start_time, validity_end_time, is_used, is_delete,
+                                           create_time, update_time, product_id, product_name, product_cover_url)
+        values (#{userId}, #{sourceId}, #{sourceType}, #{couponId}, #{couponType}, #{couponName}, #{couponPrice},
+                #{couponThresholdPrice}, #{currencyCode}, #{shopId}, #{shopName}, #{productIdList},
+                #{validityStartTime}, #{validityEndTime}, #{isUsed}, #{isDelete}, #{createTime}, #{updateTime},
+                #{productId}, #{productName}, #{productCoverUrl})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_user_coupon(user_id, source_id, source_type, coupon_id, coupon_type, coupon_name,
+        coupon_price, coupon_threshold_price, currency_code, shop_id, shop_name, product_id_list, validity_start_time,
+        validity_end_time, is_used, is_delete, create_time, update_time, product_id, product_name, product_cover_url)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.sourceId}, #{entity.sourceType}, #{entity.couponId}, #{entity.couponType},
+            #{entity.couponName}, #{entity.couponPrice}, #{entity.couponThresholdPrice}, #{entity.currencyCode},
+            #{entity.shopId}, #{entity.shopName}, #{entity.productIdList}, #{entity.validityStartTime},
+            #{entity.validityEndTime}, #{entity.isUsed}, #{entity.isDelete}, #{entity.createTime}, #{entity.updateTime},
+            #{entity.productId}, #{entity.productName}, #{entity.productCoverUrl})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_user_coupon(user_id, source_id, source_type, coupon_id, coupon_type, coupon_name,
+        coupon_price, coupon_threshold_price, currency_code, shop_id, shop_name, product_id_list, validity_start_time,
+        validity_end_time, is_used, is_delete, create_time, update_time, product_id, product_name, product_cover_url)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.sourceId}, #{entity.sourceType}, #{entity.couponId}, #{entity.couponType},
+            #{entity.couponName}, #{entity.couponPrice}, #{entity.couponThresholdPrice}, #{entity.currencyCode},
+            #{entity.shopId}, #{entity.shopName}, #{entity.productIdList}, #{entity.validityStartTime},
+            #{entity.validityEndTime}, #{entity.isUsed}, #{entity.isDelete}, #{entity.createTime}, #{entity.updateTime},
+            #{entity.productId}, #{entity.productName}, #{entity.productCoverUrl})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id) , source_id = values(source_id) , source_type = values(source_type) , coupon_id =
+        values(coupon_id) , coupon_type = values(coupon_type) , coupon_name = values(coupon_name) , coupon_price =
+        values(coupon_price) , coupon_threshold_price = values(coupon_threshold_price) , currency_code =
+        values(currency_code) , shop_id = values(shop_id) , shop_name = values(shop_name) , product_id_list =
+        values(product_id_list) , validity_start_time = values(validity_start_time) , validity_end_time =
+        values(validity_end_time) , is_used = values(is_used) , is_delete = values(is_delete) , create_time =
+        values(create_time) , update_time = values(update_time) , product_id = values(product_id) , product_name =
+        values(product_name) , product_cover_url = values(product_cover_url)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_ooooo.t_user_coupon
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="sourceId != null and sourceId != ''">
+                source_id = #{sourceId},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType},
+            </if>
+            <if test="couponId != null and couponId != ''">
+                coupon_id = #{couponId},
+            </if>
+            <if test="couponType != null">
+                coupon_type = #{couponType},
+            </if>
+            <if test="couponName != null and couponName != ''">
+                coupon_name = #{couponName},
+            </if>
+            <if test="couponPrice != null">
+                coupon_price = #{couponPrice},
+            </if>
+            <if test="couponThresholdPrice != null">
+                coupon_threshold_price = #{couponThresholdPrice},
+            </if>
+            <if test="currencyCode != null and currencyCode != ''">
+                currency_code = #{currencyCode},
+            </if>
+            <if test="shopId != null and shopId != ''">
+                shop_id = #{shopId},
+            </if>
+            <if test="shopName != null and shopName != ''">
+                shop_name = #{shopName},
+            </if>
+            <if test="productIdList != null and productIdList != ''">
+                product_id_list = #{productIdList},
+            </if>
+            <if test="validityStartTime != null">
+                validity_start_time = #{validityStartTime},
+            </if>
+            <if test="validityEndTime != null">
+                validity_end_time = #{validityEndTime},
+            </if>
+            <if test="isUsed != null">
+                is_used = #{isUsed},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="productId != null and productId != ''">
+                product_id = #{productId},
+            </if>
+            <if test="productName != null and productName != ''">
+                product_name = #{productName},
+            </if>
+            <if test="productCoverUrl != null and productCoverUrl != ''">
+                product_cover_url = #{productCoverUrl},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from db_ooooo.t_user_coupon
+        where id = #{id}
+    </delete>
+
+</mapper>
+

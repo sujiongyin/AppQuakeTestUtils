@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.UserOrderDao">
+    <resultMap id="BaseResultMap" type="com.ooooo.quake.model.UserOrder">
+        <!--@Table t_user_order-->
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPhone" column="user_phone" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="initialPrice" column="initial_price" jdbcType="NUMERIC"/>
+        <result property="couponPrice" column="coupon_price" jdbcType="NUMERIC"/>
+        <result property="initialCouponPrice" column="initial_coupon_price" jdbcType="NUMERIC"/>
+        <result property="paidPrice" column="paid_price" jdbcType="NUMERIC"/>
+        <result property="initialPaidPrice" column="initial_paid_price" jdbcType="NUMERIC"/>
+        <result property="paidPriceUsd" column="paid_price_usd" jdbcType="NUMERIC"/>
+        <result property="shippingPrice" column="shipping_price" jdbcType="NUMERIC"/>
+        <result property="initialShippingPrice" column="initial_shipping_price" jdbcType="NUMERIC"/>
+        <result property="shippingPriceUsd" column="shipping_price_usd" jdbcType="NUMERIC"/>
+        <result property="productNum" column="product_num" jdbcType="INTEGER"/>
+        <result property="initialProductNum" column="initial_product_num" jdbcType="INTEGER"/>
+        <result property="userCouponId" column="user_coupon_id" jdbcType="VARCHAR"/>
+        <result property="couponId" column="coupon_id" jdbcType="VARCHAR"/>
+        <result property="orderState" column="order_state" jdbcType="INTEGER"/>
+        <result property="cancelReason" column="cancel_reason" jdbcType="VARCHAR"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="needInvoice" column="need_invoice" jdbcType="OTHER"/>
+        <result property="invoiceType" column="invoice_type" jdbcType="OTHER"/>
+        <result property="invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
+        <result property="shopId" column="shop_id" jdbcType="VARCHAR"/>
+        <result property="shopName" column="shop_name" jdbcType="VARCHAR"/>
+        <result property="startDeliveryTime" column="start_delivery_time" jdbcType="INTEGER"/>
+        <result property="deliveryTime" column="delivery_time" jdbcType="INTEGER"/>
+        <result property="refundId" column="refund_id" jdbcType="VARCHAR"/>
+        <result property="refundType" column="refund_type" jdbcType="OTHER"/>
+        <result property="payId" column="pay_id" jdbcType="VARCHAR"/>
+        <result property="payType" column="pay_type" jdbcType="OTHER"/>
+        <result property="orderChannel" column="order_channel" jdbcType="INTEGER"/>
+        <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+        <result property="returnId" column="return_id" jdbcType="VARCHAR"/>
+        <result property="haveCommission" column="have_commission" jdbcType="OTHER"/>
+        <result property="commission" column="commission" jdbcType="NUMERIC"/>
+        <result property="platform" column="platform" jdbcType="NUMERIC"/>
+        <result property="commissionState" column="commission_state" jdbcType="OTHER"/>
+        <result property="commissionTime" column="commission_time" jdbcType="TIMESTAMP"/>
+        <result property="receivedTime" column="received_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="maxLogisticsDate" column="max_logistics_date" jdbcType="TIMESTAMP"/>
+        <result property="deliveryedTime" column="deliveryed_time" jdbcType="TIMESTAMP"/>
+        <result property="exchangeStatus" column="exchange_status" jdbcType="OTHER"/>
+        <result property="transactionId" column="transaction_id" jdbcType="VARCHAR"/>
+        <result property="closeTime" column="close_time" jdbcType="TIMESTAMP"/>
+        <result property="currency" column="currency" jdbcType="VARCHAR"/>
+        <result property="exchangeRate" column="exchange_rate" jdbcType="VARCHAR"/>
+        <result property="vat" column="vat" jdbcType="NUMERIC"/>
+        <result property="initialVat" column="initial_vat" jdbcType="NUMERIC"/>
+        <result property="closeDate" column="close_date" jdbcType="OTHER"/>
+        <result property="visible" column="visible" jdbcType="INTEGER"/>
+        <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+        <result property="notifyStatus" column="notify_status" jdbcType="INTEGER"/>
+        <result property="virtualStock" column="virtual_stock" jdbcType="INTEGER"/>
+        <result property="orderStatusChangeTime" column="order_status_change_time" jdbcType="TIMESTAMP"/>
+        <result property="usdCostPrice" column="usd_cost_price" jdbcType="NUMERIC"/>
+        <result property="refundReason" column="refund_reason" jdbcType="VARCHAR"/>
+        <result property="localSellerUserId" column="local_seller_user_id" jdbcType="VARCHAR"/>
+        <result property="tax" column="tax" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--     更改订单状态-->
+    <update id="updatePayOrderState">
+        update t_user_order
+        set order_state =2,
+            pay_time    =NOW()
+        where id = #{id}
+    </update>
+
+    <!--    更新订单表TransactionId-->
+    <update id="updateOrderTransactionId">
+        update t_user_order
+        set transaction_id =#{transactionId}
+        where id = #{id}
+    </update>
+
+    <!--    查询订单详情-->
+    <select id="queryOrderInfo" resultType="com.ooooo.quake.model.UserOrder">
+        select
+        id, parent_id, order_no, user_id, user_name, user_phone, price, initial_price, coupon_price,
+        initial_coupon_price, paid_price, initial_paid_price, paid_price_usd, shipping_price, initial_shipping_price,
+        shipping_price_usd, product_num, initial_product_num, user_coupon_id, coupon_id, order_state, cancel_reason,
+        cancel_time, need_invoice, invoice_type, invoice_title, shop_id, shop_name, start_delivery_time, delivery_time,
+        refund_id, refund_type, pay_id, pay_type, order_channel, pay_time, return_id, have_commission,
+        commission, platform, commission_state, commission_time, received_time, create_time, update_time,
+        max_logistics_date, deliveryed_time, exchange_status, transaction_id, close_time, currency, exchange_rate, vat,
+        initial_vat, close_date, visible, is_delete, notify_status, virtual_stock, order_status_change_time,
+        usd_cost_price, refund_reason, local_seller_user_id, tax
+        from t_user_order
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and order_no = #{orderNo}
+            </if>
+        </where>
+    </select>
+
+
+    <!--    查询最近几笔订单-->
+    <select id="queryRecentOrder" resultType="com.ooooo.quake.model.UserOrder">
+        select id,
+               parent_id,
+               order_no,
+               user_id,
+               user_name,
+               user_phone,
+               price,
+               initial_price,
+               coupon_price,
+               initial_coupon_price,
+               paid_price,
+               initial_paid_price,
+               paid_price_usd,
+               shipping_price,
+               initial_shipping_price,
+               shipping_price_usd,
+               product_num,
+               initial_product_num,
+               user_coupon_id,
+               coupon_id,
+               order_state,
+               cancel_reason,
+               cancel_time,
+               need_invoice,
+               invoice_type,
+               invoice_title,
+               shop_id,
+               shop_name,
+               start_delivery_time,
+               delivery_time,
+               refund_id,
+               refund_type,
+               pay_id,
+               pay_type,
+               order_channel,
+               pay_time,
+               return_id,
+               have_commission,
+               commission,
+               platform,
+               commission_state,
+               commission_time,
+               received_time,
+               create_time,
+               update_time,
+               max_logistics_date,
+               deliveryed_time,
+               exchange_status,
+               transaction_id,
+               close_time,
+               currency,
+               exchange_rate,
+               vat,
+               initial_vat,
+               close_date,
+               visible,
+               is_delete,
+               notify_status,
+               virtual_stock,
+               order_status_change_time,
+               usd_cost_price,
+               refund_reason,
+               local_seller_user_id,
+               tax
+        from t_user_order
+        where order_state = 1
+        order by create_time desc limit #{offset}, #{limit}
+    </select>
+
+
+</mapper>

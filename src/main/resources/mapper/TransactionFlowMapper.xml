@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.TransactionFlowDao">
+
+    <resultMap id="BaseResultMap" type="com.ooooo.quake.model.TransactionFlow">
+        <!--@Table t_transaction_flow-->
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="parentTransId" column="parent_trans_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="referOrderId" column="refer_order_id" jdbcType="VARCHAR"/>
+        <result property="currencyCode" column="currency_code" jdbcType="VARCHAR"/>
+        <result property="totalAmount" column="total_amount" jdbcType="INTEGER"/>
+        <result property="transDesc" column="trans_desc" jdbcType="VARCHAR"/>
+        <result property="transChannel" column="trans_channel" jdbcType="INTEGER"/>
+        <result property="marketTransState" column="market_trans_state" jdbcType="INTEGER"/>
+        <result property="transType" column="trans_type" jdbcType="INTEGER"/>
+        <result property="marketSettlementState" column="market_settlement_state" jdbcType="INTEGER"/>
+        <result property="externalTransId" column="external_trans_id" jdbcType="VARCHAR"/>
+        <result property="externalTransState" column="external_trans_state" jdbcType="VARCHAR"/>
+        <result property="externalExtra" column="external_extra" jdbcType="OTHER"/>
+        <result property="externalErrorInfo" column="external_error_info" jdbcType="OTHER"/>
+        <result property="externalUpdateTime" column="external_update_time" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="OTHER"/>
+        <result property="updateTime" column="update_time" jdbcType="OTHER"/>
+        <result property="isDelete" column="is_delete" jdbcType="OTHER"/>
+        <result property="remark1" column="remark1" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--    根据ReferOrderId 查询详情-->
+    <select id="queryByReferOrderId" resultType="com.ooooo.quake.model.TransactionFlow">
+        select id,
+               parent_trans_id,
+               user_id,
+               refer_order_id,
+               currency_code,
+               total_amount,
+               trans_desc,
+               trans_channel,
+               market_trans_state,
+               trans_type,
+               market_settlement_state,
+               external_trans_id,
+               external_trans_state,
+               external_extra,
+               external_error_info,
+               external_update_time,
+               create_time,
+               update_time,
+               is_delete,
+               remark1
+        from db_ooooo.t_transaction_flow
+        where refer_order_id = #{referOrderId}
+    </select>
+
+
+</mapper>

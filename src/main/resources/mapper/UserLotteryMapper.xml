@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.UserLotteryDao">
+
+    <resultMap type="com.ooooo.quake.model.UserLottery" id="TUserLotteryMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="payStatus" column="pay_status" jdbcType="INTEGER"/>
+        <result property="transactionId" column="transaction_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="lotteryDate" column="lottery_date" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="firstName" column="first_name" jdbcType="VARCHAR"/>
+        <result property="lastName" column="last_name" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="houseNo" column="house_no" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="zipCode" column="zip_code" jdbcType="VARCHAR"/>
+        <result property="countryName" column="country_name" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="mobileCountryCode" column="mobile_country_code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TUserLotteryMap">
+        select id,
+               user_id,
+               pay_status,
+               transaction_id,
+               create_time,
+               update_time,
+               lottery_date,
+               status,
+               first_name,
+               last_name,
+               contact_name,
+               house_no,
+               address,
+               city,
+               province,
+               zip_code,
+               country_name,
+               phone_number,
+               mobile_country_code
+        from db_ooooo.t_user_lottery
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TUserLotteryMap">
+        select id,
+               user_id,
+               pay_status,
+               transaction_id,
+               create_time,
+               update_time,
+               lottery_date,
+               status,
+               first_name,
+               last_name,
+               contact_name,
+               house_no,
+               address,
+               city,
+               province,
+               zip_code,
+               country_name,
+               phone_number,
+               mobile_country_code
+        from db_ooooo.t_user_lottery limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TUserLotteryMap">
+        select
+        id, user_id, pay_status, transaction_id, create_time, update_time, lottery_date, status, first_name, last_name,
+        contact_name, house_no, address, city, province, zip_code, country_name, phone_number, mobile_country_code
+        from db_ooooo.t_user_lottery
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="payStatus != null">
+                and pay_status = #{payStatus}
+            </if>
+            <if test="transactionId != null and transactionId != ''">
+                and transaction_id = #{transactionId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="lotteryDate != null">
+                and lottery_date = #{lotteryDate}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="firstName != null and firstName != ''">
+                and first_name = #{firstName}
+            </if>
+            <if test="lastName != null and lastName != ''">
+                and last_name = #{lastName}
+            </if>
+            <if test="contactName != null and contactName != ''">
+                and contact_name = #{contactName}
+            </if>
+            <if test="houseNo != null and houseNo != ''">
+                and house_no = #{houseNo}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="zipCode != null and zipCode != ''">
+                and zip_code = #{zipCode}
+            </if>
+            <if test="countryName != null and countryName != ''">
+                and country_name = #{countryName}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and phone_number = #{phoneNumber}
+            </if>
+            <if test="mobileCountryCode != null and mobileCountryCode != ''">
+                and mobile_country_code = #{mobileCountryCode}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_user_lottery(user_id, pay_status, transaction_id, create_time, update_time, lottery_date,
+                                            status, first_name, last_name, contact_name, house_no, address, city,
+                                            province, zip_code, country_name, phone_number, mobile_country_code)
+        values (#{userId}, #{payStatus}, #{transactionId}, #{createTime}, #{updateTime}, #{lotteryDate}, #{status},
+                #{firstName}, #{lastName}, #{contactName}, #{houseNo}, #{address}, #{city}, #{province}, #{zipCode},
+                #{countryName}, #{phoneNumber}, #{mobileCountryCode})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_user_lottery(user_id, pay_status, transaction_id, create_time, update_time, lottery_date,
+        status, first_name, last_name, contact_name, house_no, address, city, province, zip_code, country_name,
+        phone_number, mobile_country_code)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.payStatus}, #{entity.transactionId}, #{entity.createTime}, #{entity.updateTime},
+            #{entity.lotteryDate}, #{entity.status}, #{entity.firstName}, #{entity.lastName}, #{entity.contactName},
+            #{entity.houseNo}, #{entity.address}, #{entity.city}, #{entity.province}, #{entity.zipCode},
+            #{entity.countryName}, #{entity.phoneNumber}, #{entity.mobileCountryCode})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_user_lottery(user_id, pay_status, transaction_id, create_time, update_time, lottery_date,
+        status, first_name, last_name, contact_name, house_no, address, city, province, zip_code, country_name,
+        phone_number, mobile_country_code)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.payStatus}, #{entity.transactionId}, #{entity.createTime}, #{entity.updateTime},
+            #{entity.lotteryDate}, #{entity.status}, #{entity.firstName}, #{entity.lastName}, #{entity.contactName},
+            #{entity.houseNo}, #{entity.address}, #{entity.city}, #{entity.province}, #{entity.zipCode},
+            #{entity.countryName}, #{entity.phoneNumber}, #{entity.mobileCountryCode})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id) , pay_status = values(pay_status) , transaction_id = values(transaction_id) ,
+        create_time = values(create_time) , update_time = values(update_time) , lottery_date = values(lottery_date) ,
+        status = values(status) , first_name = values(first_name) , last_name = values(last_name) , contact_name =
+        values(contact_name) , house_no = values(house_no) , address = values(address) , city = values(city) , province
+        = values(province) , zip_code = values(zip_code) , country_name = values(country_name) , phone_number =
+        values(phone_number) , mobile_country_code = values(mobile_country_code)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_ooooo.t_user_lottery
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="payStatus != null">
+                pay_status = #{payStatus},
+            </if>
+            <if test="transactionId != null and transactionId != ''">
+                transaction_id = #{transactionId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="lotteryDate != null">
+                lottery_date = #{lotteryDate},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="firstName != null and firstName != ''">
+                first_name = #{firstName},
+            </if>
+            <if test="lastName != null and lastName != ''">
+                last_name = #{lastName},
+            </if>
+            <if test="contactName != null and contactName != ''">
+                contact_name = #{contactName},
+            </if>
+            <if test="houseNo != null and houseNo != ''">
+                house_no = #{houseNo},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="zipCode != null and zipCode != ''">
+                zip_code = #{zipCode},
+            </if>
+            <if test="countryName != null and countryName != ''">
+                country_name = #{countryName},
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                phone_number = #{phoneNumber},
+            </if>
+            <if test="mobileCountryCode != null and mobileCountryCode != ''">
+                mobile_country_code = #{mobileCountryCode},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from db_ooooo.t_user_lottery
+        where id = #{id}
+    </delete>
+
+</mapper>
+
