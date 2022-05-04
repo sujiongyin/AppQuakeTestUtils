@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.ProduterDao">
+
+    <resultMap id="BaseResultMap" type="com.ooooo.quake.model.Produter">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="productId" column="product_id" jdbcType="VARCHAR"/>
+        <result property="productSpecs" column="product_specs" jdbcType="OTHER"/>
+        <result property="price" column="price" jdbcType="DECIMAL"/>
+        <result property="discountPrice" column="discount_price" jdbcType="DECIMAL"/>
+        <result property="costPrice" column="cost_price" jdbcType="DECIMAL"/>
+        <result property="guidePrice" column="guide_price" jdbcType="DECIMAL"/>
+        <result property="stock" column="stock" jdbcType="BIGINT"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="skuId" column="sku_id" jdbcType="VARCHAR"/>
+        <result property="barCode" column="bar_code" jdbcType="VARCHAR"/>
+        <result property="isSample" column="is_sample" jdbcType="BOOLEAN"/>
+        <result property="isSelected" column="is_selected" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,product_id,product_specs,
+        price,discount_price,cost_price,
+        guide_price,stock,image,
+        sort_order,create_time,is_delete,
+        update_time,code,sku_id,
+        bar_code,is_sample,is_selected
+    </sql>
+
+    <!--查询单个-->
+    <select id="skuIdToOfferId" resultMap="BaseResultMap">
+        select id,
+            product_id,
+            product_specs,
+            price,
+            discount_price,
+            cost_price,
+            guide_price,
+            stock,
+            image,
+            sort_order,
+            create_time,
+            is_delete,
+            update_time,
+            code,
+            sku_id,
+            bar_code,
+            is_sample,
+            is_selected
+        from db_ooooo.t_market_product_sku
+        where id = #{id}
+    </select>
+</mapper>

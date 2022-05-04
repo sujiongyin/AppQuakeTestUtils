@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.OrchardInfoDao">
+
+    <resultMap type="com.ooooo.quake.model.OrchardInfo" id="OrchardInfoMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="treeType" column="tree_type" jdbcType="INTEGER"/>
+        <result property="treeStatus" column="tree_status" jdbcType="INTEGER"/>
+        <result property="fertilizerNum" column="fertilizer_num" jdbcType="INTEGER"/>
+        <result property="waterNum" column="water_num" jdbcType="INTEGER"/>
+        <result property="waterCount" column="water_count" jdbcType="INTEGER"/>
+        <result property="progress" column="progress" jdbcType="INTEGER"/>
+        <result property="lastSignTime" column="last_sign_time" jdbcType="TIMESTAMP"/>
+        <result property="continueSignDay" column="continue_sign_day" jdbcType="INTEGER"/>
+        <result property="lnpkNum" column="lnpk_num" jdbcType="INTEGER"/>
+        <result property="bnpkNum" column="bnpk_num" jdbcType="INTEGER"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OrchardInfoMap">
+        select id,
+               user_id,
+               tree_type,
+               tree_status,
+               fertilizer_num,
+               water_num,
+               water_count,
+               progress,
+               last_sign_time,
+               continue_sign_day,
+               lnpk_num,
+               bnpk_num,
+               is_delete,
+               create_time,
+               update_time
+        from db_ooooo.t_orchard_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OrchardInfoMap">
+        select id,
+               user_id,
+               tree_type,
+               tree_status,
+               fertilizer_num,
+               water_num,
+               water_count,
+               progress,
+               last_sign_time,
+               continue_sign_day,
+               lnpk_num,
+               bnpk_num,
+               is_delete,
+               create_time,
+               update_time
+        from db_ooooo.t_orchard_info limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OrchardInfoMap">
+        select
+        id, user_id, tree_type, tree_status, fertilizer_num, water_num, water_count, progress, last_sign_time,
+        continue_sign_day, lnpk_num, bnpk_num, is_delete, create_time, update_time
+        from db_ooooo.t_orchard_info
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="treeType != null">
+                and tree_type = #{treeType}
+            </if>
+            <if test="treeStatus != null">
+                and tree_status = #{treeStatus}
+            </if>
+            <if test="fertilizerNum != null">
+                and fertilizer_num = #{fertilizerNum}
+            </if>
+            <if test="waterNum != null">
+                and water_num = #{waterNum}
+            </if>
+            <if test="waterCount != null">
+                and water_count = #{waterCount}
+            </if>
+            <if test="progress != null">
+                and progress = #{progress}
+            </if>
+            <if test="lastSignTime != null">
+                and last_sign_time = #{lastSignTime}
+            </if>
+            <if test="continueSignDay != null">
+                and continue_sign_day = #{continueSignDay}
+            </if>
+            <if test="lnpkNum != null">
+                and lnpk_num = #{lnpkNum}
+            </if>
+            <if test="bnpkNum != null">
+                and bnpk_num = #{bnpkNum}
+            </if>
+            <if test="isDelete != null">
+                and is_delete = #{isDelete}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--    根据用户Id查询果园详情-->
+    <select id="queryByUserId" resultType="com.ooooo.quake.model.OrchardInfo">
+        select id,
+               user_id,
+               tree_type,
+               tree_status,
+               fertilizer_num,
+               water_num,
+               water_count,
+               progress,
+               last_sign_time,
+               continue_sign_day,
+               lnpk_num,
+               bnpk_num,
+               is_delete,
+               create_time,
+               update_time
+        from db_ooooo.t_orchard_info
+        where user_id = #{user_id}
+          and is_delete is not true
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_orchard_info(user_id, tree_type, tree_status, fertilizer_num, water_num, water_count,
+                                            progress, last_sign_time, continue_sign_day, lnpk_num, bnpk_num, is_delete,
+                                            create_time, update_time)
+        values (#{userId}, #{treeType}, #{treeStatus}, #{fertilizerNum}, #{waterNum}, #{waterCount}, #{progress},
+                #{lastSignTime}, #{continueSignDay}, #{lnpkNum}, #{bnpkNum}, #{isDelete}, #{createTime}, #{updateTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_orchard_info(user_id, tree_type, tree_status, fertilizer_num, water_num, water_count,
+        progress, last_sign_time, continue_sign_day, lnpk_num, bnpk_num, is_delete, create_time, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.treeType}, #{entity.treeStatus}, #{entity.fertilizerNum}, #{entity.waterNum},
+            #{entity.waterCount}, #{entity.progress}, #{entity.lastSignTime}, #{entity.continueSignDay},
+            #{entity.lnpkNum}, #{entity.bnpkNum}, #{entity.isDelete}, #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into db_ooooo.t_orchard_info(user_id, tree_type, tree_status, fertilizer_num, water_num, water_count,
+        progress, last_sign_time, continue_sign_day, lnpk_num, bnpk_num, is_delete, create_time, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.treeType}, #{entity.treeStatus}, #{entity.fertilizerNum}, #{entity.waterNum},
+            #{entity.waterCount}, #{entity.progress}, #{entity.lastSignTime}, #{entity.continueSignDay},
+            #{entity.lnpkNum}, #{entity.bnpkNum}, #{entity.isDelete}, #{entity.createTime}, #{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id) , tree_type = values(tree_type) , tree_status = values(tree_status) , fertilizer_num =
+        values(fertilizer_num) , water_num = values(water_num) , water_count = values(water_count) , progress =
+        values(progress) , last_sign_time = values(last_sign_time) , continue_sign_day = values(continue_sign_day) ,
+        lnpk_num = values(lnpk_num) , bnpk_num = values(bnpk_num) , is_delete = values(is_delete) , create_time =
+        values(create_time) , update_time = values(update_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update db_ooooo.t_orchard_info
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="treeType != null">
+                tree_type = #{treeType},
+            </if>
+            <if test="treeStatus != null">
+                tree_status = #{treeStatus},
+            </if>
+            <if test="fertilizerNum != null">
+                fertilizer_num = #{fertilizerNum},
+            </if>
+            <if test="waterNum != null">
+                water_num = #{waterNum},
+            </if>
+            <if test="waterCount != null">
+                water_count = #{waterCount},
+            </if>
+            <if test="progress != null">
+                progress = #{progress},
+            </if>
+            <if test="lastSignTime != null">
+                last_sign_time = #{lastSignTime},
+            </if>
+            <if test="continueSignDay != null">
+                continue_sign_day = #{continueSignDay},
+            </if>
+            <if test="lnpkNum != null">
+                lnpk_num = #{lnpkNum},
+            </if>
+            <if test="bnpkNum != null">
+                bnpk_num = #{bnpkNum},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <!--    更新updateUserId-->
+    <update id="updateByUserId">
+        update db_ooooo.t_orchard_info
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="treeType != null">
+                tree_type = #{treeType},
+            </if>
+            <if test="treeStatus != null">
+                tree_status = #{treeStatus},
+            </if>
+            <if test="fertilizerNum != null">
+                fertilizer_num = #{fertilizerNum},
+            </if>
+            <if test="waterNum != null">
+                water_num = #{waterNum},
+            </if>
+            <if test="waterCount != null">
+                water_count = #{waterCount},
+            </if>
+            <if test="progress != null">
+                progress = #{progress},
+            </if>
+            <if test="lastSignTime != null">
+                last_sign_time = #{lastSignTime},
+            </if>
+            <if test="continueSignDay != null">
+                continue_sign_day = #{continueSignDay},
+            </if>
+            <if test="lnpkNum != null">
+                lnpk_num = #{lnpkNum},
+            </if>
+            <if test="bnpkNum != null">
+                bnpk_num = #{bnpkNum},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from db_ooooo.t_orchard_info
+        where user_id = #{id}
+    </delete>
+
+</mapper>
+

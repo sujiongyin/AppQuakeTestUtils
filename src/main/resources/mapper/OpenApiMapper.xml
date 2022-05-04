@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ooooo.quake.dao.OpenAuthenticationDao">
+
+
+    <!--认证相关全部信息-->
+    <select id="OpenAuthenticationAll" resultType="com.ooooo.quake.responce.OpenAppAllResponce">
+        select oa.id,
+               oa.name,
+               oa.status,
+               oa.app_key,
+               oa.app_secret,
+               oa.scope,
+               oa.url,
+               oat.app_id,
+               oat.user_id,
+               oat.access_token,
+               oat.expires,
+               tu.email,
+               ts.id as shopId,
+               ts.name as shopName
+        from db_ooooo.open_app oa
+                 left join db_ooooo.open_access_token oat on oa.name = oat.app_id
+                 join db_ooooo.t_user tu on oat.user_id = tu.id
+                 join db_ooooo.t_shop ts on tu.id = ts.create_user_guid
+        where oat.app_id = #{app_id}
+        order by oat.create_time desc
+        limit #{limit} offset #{offset};
+    </select>
+
+
+</mapper>
